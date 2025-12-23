@@ -80,33 +80,41 @@ app.post("/home", async (req, res) => {
 });
 
 app.get("/note", (req, res) => {
-  console.log("GET");
-  res.redirect(301, "/");
+  res.render("note", { today: getToday() });
 });
 
 app.post("/note", async (req, res) => {
-    let content = {
-        "id": {
-            "msg": null,
-            "type": null
-        }
-    }
     try {
-        content.msg = await req.body.message;
-        content.type = await req.body.type;
-        fs.writeFile("notes.csv", content, {flag: 'a+'}, (err) => {
-            if (err) {
-                alert("An error occurred while writing the file.");
-                console.log(err);
-            }
-            else{
-
-                console.log("Note saved successfully.");
-            }
-        });
-    } catch (error) {
-        
+        await fs.access('notes.json');
+        console.log('note file exists!');
+    } catch {
+        console.log('note file does not exist');
     }
+
+    let data;
+    let notes = {}
+    let new_id;
+
+    try {
+        data = await fs.promises.readFile('notes.json', 'utf8');
+        notes = JSON.parse(data);
+
+    } catch (error) {
+        console.log("data does not exist");
+    }
+
+      const ids = Object.keys(notes).map(Number);
+      new_id = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+      console.log(Math.max(...ids), ids.length);
+
+      notes[new_id ] = {
+          msg: req.body.message,
+          type: req.body.type
+      };
+
+      await fs.promises.writeFile('notes.json', JSON.stringify(notes, null, 2), 'utf8');
+
+      res.json({ success: true, id: new_id });
     
     console.log("POST");
 });
