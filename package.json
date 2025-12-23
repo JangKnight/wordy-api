@@ -1,0 +1,22 @@
+{
+  "name": "expressjs-refresher",
+  "version": "1.0.0",
+  "description": "refreshing on expresss",
+  "license": "ISC",
+  "author": "Anthony Henry",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.2",
+    "bootstrap": "^5.3.8",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1",
+    "tailwindcss": "^4.1.18"
+  }
+}
