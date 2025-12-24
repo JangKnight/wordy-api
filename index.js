@@ -103,18 +103,18 @@ app.post("/note", async (req, res) => {
         console.log("data does not exist");
     }
 
-      const ids = Object.keys(notes).map(Number);
-      new_id = ids.length > 0 ? Math.max(...ids) + 1 : 1;
-      console.log(Math.max(...ids), ids.length);
+    const ids = Object.keys(notes).map(Number);
+    new_id = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+    console.log(Math.max(...ids), ids.length);
 
-      notes[new_id ] = {
-          msg: req.body.message,
-          type: req.body.type
-      };
+    notes[new_id ] = {
+        msg: req.body.message,
+        type: req.body.type
+    };
 
-      await fs.promises.writeFile('notes.json', JSON.stringify(notes, null, 2), 'utf8');
+    await fs.promises.writeFile('notes.json', JSON.stringify(notes, null, 2), 'utf8');
 
-      res.json({ success: true, id: new_id });
+    res.json({ success: true, id: new_id });
     
     console.log("POST");
 });
